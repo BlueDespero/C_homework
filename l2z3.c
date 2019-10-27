@@ -65,7 +65,34 @@ int main(void)
 
     fgets(key_text,256,stdin);
     fgets(text,256,stdin);
-    
+
+    //checking for unsupported signs
+    int unsupported = 0;
+    for (unsigned long i = 0; i<strlen(text)-1;i++)
+    {
+        if (strchr(alphabet, text[i]) == NULL)
+        {
+            unsupported = 1;
+            break;
+        }
+    }
+    if (unsupported == 0)
+    {
+        for (unsigned long i = 0; i<strlen(key_text)-1;i++)
+        {
+            if (strchr(alphabet, key_text[i]) == NULL)
+            {
+                unsupported = 1;
+                break;
+            }
+        }
+    }
+    if (unsupported == 1)
+    {
+        printf("UNSUPPORTED_ALPHABET");
+        return 0;
+    }
+
     //fixing the key length
     int mod = strlen(key_text)-1;
     for(unsigned long int i = 0;i<strlen(text)-1;i++)
