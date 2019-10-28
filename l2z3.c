@@ -95,12 +95,16 @@ int main(void)
 
     //fixing the key length
     int mod = strlen(key_text)-1;
+    printf("\nKlucz: \n");
     for(unsigned long int i = 0;i<strlen(text)-1;i++)
     {
         int s1 = key_text[i%mod];
         int s2 = map[s1];
-        key_num[i] = map_off[s2];        
+        key_num[i] = map_off[s2];
+        if (i<strlen(key_text))
+            printf("%d ", key_num[i]);  
     }
+    printf("\n");
 
     for(unsigned long int i = 0;i<strlen(text)-1;i++)
     {
