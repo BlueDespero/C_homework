@@ -19,19 +19,8 @@ void encode(void)
     for(unsigned long i = 0; i < strlen(text)-1;i++)
     {
         int y = key_num[i];
-
-        for (int i = 0; i < 64; i++)
-        {
-            if (map_off[i] == y)
-                {
-                    y = i;
-                    break;
-                }
-        }
-        
-
-        int x = text_num[i];
-        output[i] = code_table[y][x];
+        int x = map_off_reverse[text_num[i]];
+        output[i] = code_table[x][y];
     }
 }
 
@@ -43,22 +32,11 @@ void decode(void)
         int k = key_num[i];
         reverse_key[i] = (64 - k)%64;
     }
-
     for(unsigned int i = 0; i < strlen(text)-1;i++)
     {
-        //printf("%d\n", reverse_key[i]);
         int y = reverse_key[i];
-        for (int i = 0; i < 64; i++)
-        {
-            if (map_off[i] == y)
-                {
-                    y = i;
-                    break;
-                }
-        }
-
-        int x = text_num[i];
-        output[i] = code_table[y][x];
+        int x = map_off_reverse[text_num[i]];
+        output[i] = code_table[x][y];
     }
 }
 
@@ -78,7 +56,7 @@ int main(void)
         int j;
         scanf("%d",&j);
         map_off[i] = j;
-        //printf("\n%d %d %d",j,i, key_reverser[j]);
+        map_off_reverse[j] = i;
         for (int x = 0; x < 64; x++)
         {
             code_table[i][x] = alphabet[(j+x)%64];   
@@ -109,7 +87,6 @@ int main(void)
             }
         }
     }
-
     if (unsupported == 1)
     {
         printf("UNSUPPORTED_ALPHABET");
@@ -122,7 +99,7 @@ int main(void)
     {
         int s1 = key_text[i%mod];
         int s2 = map[s1];
-        key_num[i] = map_off[s2];
+        key_num[i] = map_off[s2];        
     }
 
     for(unsigned long int i = 0;i<strlen(text)-1;i++)
